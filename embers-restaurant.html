@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embers — Wood-Fired Table, Ahmedabad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1B1512;
+    --bg2:#231C18;
+    --card:#2A2119;
+    --ivory:#F3EAE0;
+    --ivory-dim:#C9BDAE;
+    --brass:#C9A15A;
+    --brass-dim:#C9A15A26;
+    --ember:#B0492F;
+    --line:#F3EAE01A;
+    --radius:10px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--ivory);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+  a{ color:inherit; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--brass); font-weight:500;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; color:var(--ivory); letter-spacing:-0.01em; }
+
+  header{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:22px 0; }
+  .logo{ font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:22px; }
+  .logo span{ color:var(--brass); font-style:normal; }
+  .nav-links{ display:flex; gap:34px; list-style:none; font-size:13.5px; }
+  .nav-links a{ text-decoration:none; color:var(--ivory-dim); transition:color .2s; }
+  .nav-links a:hover{ color:var(--brass); }
+  .nav-cta{
+    background:var(--brass); color:#241A0C; padding:10px 22px; border-radius:100px;
+    font-size:13.5px; font-weight:600; text-decoration:none; transition:transform .2s;
+    display:inline-block;
+  }
+  .nav-cta:hover{ transform:translateY(-1px); }
+
+  .hero{
+    position:relative; overflow:hidden;
+    padding:120px 0 130px;
+    background:radial-gradient(ellipse 620px 420px at 50% 8%, #B0492F22, transparent 70%), var(--bg);
+  }
+  .whatsapp-float{
+  position:fixed; bottom:26px; right:26px; z-index:60;
+  width:56px; height:56px; border-radius:50%;
+  background:#25D366;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 20px -6px #00000066;
+  text-decoration:none;
+  transition:transform .2s;
+}
+.whatsapp-float:hover{ transform:scale(1.06); }
+.whatsapp-float::before{
+  content:''; position:absolute; inset:0; border-radius:50%;
+  background:#25D366; opacity:.55;
+  animation:wa-pulse 2.2s ease-out infinite;
+}
+@keyframes wa-pulse{
+  0%{ transform:scale(1); opacity:.5; }
+  100%{ transform:scale(1.7); opacity:0; }
+}
+.whatsapp-float svg{ position:relative; z-index:1; }
+  .hero::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 500px 300px at 50% -10%, #C9A15A1f, transparent 70%);
+    animation:flicker 5s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes flicker{
+    0%,100%{ opacity:1; }
+    22%{ opacity:.82; }
+    38%{ opacity:1; }
+    55%{ opacity:.9; }
+    70%{ opacity:1; }
+    85%{ opacity:.85; }
+  }
+  .steam{ position:absolute; bottom:0; pointer-events:none; opacity:.5; }
+  .steam path{ stroke:var(--ivory); stroke-width:1.4; fill:none; opacity:.14; }
+  .s1{ left:18%; animation:rise 9s ease-in-out infinite; }
+  .s2{ left:47%; animation:rise 11s ease-in-out infinite 2s; }
+  .s3{ left:76%; animation:rise 10s ease-in-out infinite 4s; }
+  @keyframes rise{
+    0%{ transform:translateY(20px); opacity:0; }
+    15%{ opacity:.5; }
+    85%{ opacity:.15; }
+    100%{ transform:translateY(-260px); opacity:0; }
+  }
+  .hero-inner{ position:relative; z-index:2; text-align:center; max-width:680px; margin:0 auto; }
+  .hero-inner .eyebrow{ display:block; margin-bottom:22px; }
+  .hero h1{
+    font-size:clamp(42px, 6vw, 68px); line-height:1.06; margin-bottom:24px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--brass); }
+  .hero p{ color:var(--ivory-dim); font-size:17px; max-width:440px; margin:0 auto 36px; }
+  .hero-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary{
+    background:var(--brass); color:#241A0C; padding:15px 28px; border-radius:100px;
+    font-weight:600; font-size:14.5px; text-decoration:none; transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-secondary{
+    background:transparent; color:var(--ivory); padding:15px 28px; border-radius:100px;
+    font-weight:600; font-size:14.5px; text-decoration:none; border:1.5px solid var(--line);
+    transition:border-color .2s, transform .2s;
+  }
+  .btn-secondary:hover{ border-color:var(--brass); transform:translateY(-2px); }
+
+  section{ padding:96px 0; }
+  .section-head{ max-width:520px; margin:0 auto 56px; text-align:center; }
+  .section-head h2{ font-size:clamp(28px,3.6vw,38px); margin-top:12px; }
+  .section-head p{ color:var(--ivory-dim); font-size:15.5px; margin-top:14px; }
+
+  .about{ background:var(--bg2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .about-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:center; }
+  .about-visual{
+    aspect-ratio:4/5; border-radius:var(--radius); border:1px solid var(--line);
+    background:linear-gradient(160deg, #2A2119, #1B1512);
+    position:relative; overflow:hidden;
+  }
+  .about-visual::after{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(circle at 30% 70%, #B0492F30, transparent 60%);
+    animation:flicker 6s ease-in-out infinite 1s;
+  }
+  .about h2 em{ font-style:italic; color:var(--brass); }
+  .about p{ color:var(--ivory-dim); font-size:15.5px; margin-bottom:16px; max-width:460px; }
+  .stat-row{ display:flex; gap:40px; margin-top:32px; }
+  .stat{ }
+  .stat b{ display:block; font-family:'Fraunces', serif; font-size:26px; color:var(--brass); font-weight:500; }
+  .stat span{ font-size:12.5px; color:var(--ivory-dim); font-family:'JetBrains Mono', monospace; letter-spacing:.04em; }
+
+  .menu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px 64px; }
+  .menu-cat{ }
+  .menu-cat .eyebrow{ display:block; margin-bottom:20px; }
+  .menu-item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+    padding:14px 0; border-bottom:1px dashed var(--line);
+  }
+  .menu-item:last-child{ border-bottom:none; }
+  .menu-item .mi-name{ font-size:15.5px; font-weight:500; }
+  .menu-item .mi-desc{ display:block; color:var(--ivory-dim); font-size:13px; margin-top:3px; font-weight:400; }
+  .menu-item .mi-price{ font-family:'JetBrains Mono', monospace; color:var(--brass); font-size:14px; white-space:nowrap; }
+
+  .gallery{ background:var(--bg2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .gallery-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; grid-template-rows:180px 180px; gap:14px; }
+  .g-tile{
+    border-radius:var(--radius); border:1px solid var(--line);
+    background:linear-gradient(145deg, #2A2119, #1F1712);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ivory-dim);
+    letter-spacing:.06em; text-transform:uppercase; position:relative; overflow:hidden;
+  }
+  .g-tile.tall{ grid-row:span 2; }
+  .g-tile::after{
+    content:''; position:absolute; inset:0; opacity:0;
+    background:radial-gradient(circle at 50% 50%, #C9A15A30, transparent 65%);
+    transition:opacity .4s;
+  }
+  .g-tile:hover::after{ opacity:1; }
+
+  .reserve{ text-align:center; }
+  .reserve-form{
+    max-width:520px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  }
+  .reserve-form input, .reserve-form select{
+    background:var(--card); border:1px solid var(--line); border-radius:8px;
+    padding:13px 16px; color:var(--ivory); font-family:'Inter',sans-serif; font-size:14px;
+  }
+  .reserve-form .full{ grid-column:1 / -1; }
+  .reserve-form button{
+    grid-column:1 / -1; background:var(--brass); color:#241A0C; border:none;
+    padding:15px; border-radius:8px; font-weight:600; font-size:14.5px; cursor:pointer;
+    transition:transform .2s; margin-top:6px;
+  }
+  .reserve-form button:hover{ transform:translateY(-1px); }
+
+  footer{
+    background:var(--bg2); border-top:1px solid var(--line); padding:28px 0;
+    color:var(--ivory-dim); font-size:12.5px; display:flex; justify-content:space-between;
+  }
+
+  @media (max-width:860px){
+    .hero{ padding:90px 0 100px; }
+    .nav-links{ display:none; }
+    .about-grid{ grid-template-columns:1fr; }
+    .menu-grid{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:1fr 1fr; grid-template-rows:140px 140px 140px; }
+    .g-tile.tall{ grid-row:span 1; }
+    .reserve-form{ grid-template-columns:1fr; }
+  }
+  .whatsapp-float{
+  position:fixed; bottom:26px; right:26px; z-index:60;
+  width:56px; height:56px; border-radius:50%;
+  background:#25D366;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 20px -6px #00000066;
+  text-decoration:none;
+  transition:transform .2s;
+}
+.whatsapp-float:hover{ transform:scale(1.06); }
+.whatsapp-float::before{
+  content:''; position:absolute; inset:0; border-radius:50%;
+  background:#25D366; opacity:.55;
+  animation:wa-pulse 2.2s ease-out infinite;
+}
+@keyframes wa-pulse{
+  0%{ transform:scale(1); opacity:.5; }
+  100%{ transform:scale(1.7); opacity:0; }
+}
+.whatsapp-float svg{ position:relative; z-index:1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">Embers<span>.</span></div>
+      <ul class="nav-links">
+        <li><a href="#about">Story</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+      </ul>
+      <a href="#reserve" class="nav-cta">Reserve a table</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="steam s1" width="40" height="280" viewBox="0 0 40 280"><path d="M20 260 Q30 220 15 190 Q5 160 25 130 Q35 100 15 70 Q5 40 20 10"/></svg>
+  <svg class="steam s2" width="40" height="280" viewBox="0 0 40 280"><path d="M20 260 Q10 220 25 190 Q35 160 15 130 Q5 100 25 70 Q35 40 20 10"/></svg>
+  <svg class="steam s3" width="40" height="280" viewBox="0 0 40 280"><path d="M20 260 Q30 220 15 190 Q5 160 25 130 Q35 100 15 70 Q5 40 20 10"/></svg>
+  <div class="wrap hero-inner">
+    <span class="eyebrow">Wood-fired · Ahmedabad</span>
+    <h1>Dinner, cooked over <em>real fire</em>, served late.</h1>
+    <p>A small open-flame kitchen and a short menu that changes with what's good that week. No printed specials — just what's on the fire tonight.</p>
+    <div class="hero-actions">
+      <a href="#reserve" class="btn-primary">Reserve a table →</a>
+      <a href="#menu" class="btn-secondary">See the menu</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-visual">
+      <img src="https://hips.hearstapps.com/edc.h-cdn.co/assets/16/28/2048x1536/sd-aspect-1468508286-ce-la-vi-restaurant-indoor.jpg?resize=1200:*"/>
+    </div>
+    <div>
+      <span class="eyebrow">Our story</span>
+      <h2>Built around <em>one</em> fire, not a hundred appliances.</h2>
+      <p>Embers started with a single question: what happens if a kitchen has no fryers, no microwaves, no shortcuts — just wood, coal, and people who know how to read a flame.</p>
+      <p>Every dish that leaves the kitchen has touched the fire in some way, whether it's the char on a flatbread or the smoke folded into a dessert.</p>
+      <div class="stat-row">
+        <div class="stat"><b>1</b><span>open flame, no gas line</span></div>
+        <div class="stat"><b>28</b><span>seats, most nights full</span></div>
+        <div class="stat"><b>6PM–1AM</b><span>kitchen stays lit late</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Tonight's menu</span>
+      <h2>Short on purpose.</h2>
+      <p>A tight list, changed often. If it's not fresh enough to fire tonight, it isn't on here.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-cat">
+        <span class="eyebrow">To start</span>
+        <div class="menu-item">
+          <div><span class="mi-name">Charred corn, chilli butter</span><span class="mi-desc">Whole cob, straight off the coal</span></div>
+          <span class="mi-price">₹220</span>
+        </div>
+        <div class="menu-item">
+          <div><span class="mi-name">Smoked burrata</span><span class="mi-desc">Fire-smoked over ash for six minutes</span></div>
+          <span class="mi-price">₹380</span>
+        </div>
+        <div class="menu-item">
+          <div><span class="mi-name">Flatbread, embers oil</span><span class="mi-desc">Baked directly on stone</span></div>
+          <span class="mi-price">₹190</span>
+        </div>
+      </div>
+      <div class="menu-cat">
+        <span class="eyebrow">From the fire</span>
+        <div class="menu-item">
+          <div><span class="mi-name">Whole grilled pomfret</span><span class="mi-desc">Coastal spice, charred lemon</span></div>
+          <span class="mi-price">₹640</span>
+        </div>
+        <div class="menu-item">
+          <div><span class="mi-name">Smoked mushroom skewers</span><span class="mi-desc">Char-grilled, herb oil</span></div>
+          <span class="mi-price">₹410</span>
+        </div>
+        <div class="menu-item">
+          <div><span class="mi-name">Ember-roasted eggplant</span><span class="mi-desc">Slow-charred, tahini</span></div>
+          <span class="mi-price">₹340</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Inside Embers</span>
+      <h2>The room, the fire, the plates.</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="g-tile tall">
+        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/82/c0/92/bayleaf.jpg"/>
+      </div>
+      <div class="g-tile">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPe_OpE_DOhlyFlcBy7UKzS2WKAfeBfbIoaF-I-u5z_w5OG90ohrcpkJcC&s=10"/>
+      </div>
+      <div class="g-tile">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGAHGvfBaVPoPGpBkQ8k6ccjYz51qobMEThkENzJatbxKTAUB0oF7Y4lOj&s=10"/>
+      </div>
+      <div class="g-tile">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCbe98hwXOi_z87Mao-H1HT9ikex30Gqxxxb7QTknUmQ_Gx9NLqxqYQy4&s=10"/>
+      </div>
+      <div class="g-tile">
+        <img src="https://www.gotable.com/media/wysiwyg/resource-pages/bar_seating_layout.jpeg"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reserve" id="reserve">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Reserve</span>
+      <h2>Book a table.</h2>
+      <p>Seats go quickly after 8PM — book ahead for weekends.</p>
+    </div>
+    <form class="reserve-form">
+      <input type="text" placeholder="Your name" required>
+      <input type="tel" placeholder="Phone number" required>
+      <input type="date" required>
+      <select required>
+        <option value="" disabled selected>Party size</option>
+        <option>2 guests</option>
+        <option>3–4 guests</option>
+        <option>5–6 guests</option>
+        <option>7+ guests</option>
+      </select>
+      <input type="text" class="full" placeholder="Anything we should know? (optional)">
+      <button type="submit">Confirm reservation</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
+    <span>© 2026 Embers</span>
+    <span>Wood-fired dinner, nightly from 6PM.</span>
+  </div>
+</footer>
+<a href="https://wa.me/910000000000" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Book on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.71.44 3.36 1.29 4.83L2 22l5.42-1.38a9.9 9.9 0 0 0 4.62 1.15h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.64-1.03-5.13-2.9-6.99A9.82 9.82 0 0 0 12.04 2m0 1.67c2.27 0 4.4.88 6 2.49a8.4 8.4 0 0 1 2.48 5.99c0 4.67-3.8 8.47-8.48 8.47a8.5 8.5 0 0 1-4.31-1.17l-.31-.18-3.21.84.86-3.13-.2-.32a8.36 8.36 0 0 1-1.29-4.51c0-4.67 3.8-8.48 8.46-8.48m-4.65 4.36c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.35.99 2.51c.12.16 1.7 2.72 4.2 3.71 2.08.82 2.5.66 2.96.62.46-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.22-.16-.46-.28-.24-.12-1.47-.72-1.7-.8-.23-.09-.39-.13-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.35-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.29.37-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.56-1.36-.78-1.86-.2-.48-.4-.42-.56-.43z"/>
+  </svg>
+</a>
+</body>
+</html>
