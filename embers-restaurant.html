@@ -140,10 +140,12 @@
     background:linear-gradient(160deg, #2A2119, #1B1512);
     position:relative; overflow:hidden;
   }
+  .about-visual img{ width:100%; height:100%; object-fit:cover; display:block; }
   .about-visual::after{
     content:''; position:absolute; inset:0;
     background:radial-gradient(circle at 30% 70%, #B0492F30, transparent 60%);
     animation:flicker 6s ease-in-out infinite 1s;
+    pointer-events:none;
   }
   .about h2 em{ font-style:italic; color:var(--brass); }
   .about p{ color:var(--ivory-dim); font-size:15.5px; margin-bottom:16px; max-width:460px; }
@@ -152,17 +154,101 @@
   .stat b{ display:block; font-family:'Fraunces', serif; font-size:26px; color:var(--brass); font-weight:500; }
   .stat span{ font-size:12.5px; color:var(--ivory-dim); font-family:'JetBrains Mono', monospace; letter-spacing:.04em; }
 
-  .menu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px 64px; }
-  .menu-cat{ }
-  .menu-cat .eyebrow{ display:block; margin-bottom:20px; }
-  .menu-item{
-    display:flex; justify-content:space-between; align-items:baseline; gap:12px;
-    padding:14px 0; border-bottom:1px dashed var(--line);
+  /* ===== CIRCULAR MENU CAROUSEL ===== */
+  .menu{ position:relative; overflow:hidden; }
+  .menu::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 700px 400px at 50% 40%, #B0492F14, transparent 70%);
+    pointer-events:none;
   }
-  .menu-item:last-child{ border-bottom:none; }
-  .menu-item .mi-name{ font-size:15.5px; font-weight:500; }
-  .menu-item .mi-desc{ display:block; color:var(--ivory-dim); font-size:13px; margin-top:3px; font-weight:400; }
-  .menu-item .mi-price{ font-family:'JetBrains Mono', monospace; color:var(--brass); font-size:14px; white-space:nowrap; }
+  .carousel{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    gap:0;
+    height:340px;
+    perspective:1400px;
+  }
+  .car-stage{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .car-slot{
+    position:absolute;
+    top:50%; left:50%;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .6s cubic-bezier(.22,.9,.3,1), opacity .6s ease, filter .6s ease;
+    will-change:transform, opacity;
+  }
+  .car-plate{
+    width:230px; height:230px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .car-plate::before{
+    content:''; position:absolute; inset:6%;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 55%, #FFFFFF07, transparent 70%);
+    border:1px solid var(--line);
+  }
+  .car-plate img{
+    width:78%; height:78%; object-fit:contain;
+    filter:drop-shadow(0 18px 24px #00000070);
+    position:relative; z-index:2;
+    background:transparent;
+  }
+  .car-glow{
+    position:absolute; inset:-18%;
+    border-radius:50%;
+    background:radial-gradient(circle, #C9A15A30, transparent 65%);
+    opacity:0; transition:opacity .6s ease;
+    z-index:0;
+  }
+  .car-slot.active .car-glow{ opacity:1; }
+
+  .car-nav{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:46px; height:46px; border-radius:50%;
+    background:var(--card); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:10; transition:border-color .2s, transform .2s;
+    color:var(--ivory);
+  }
+  .car-nav:hover{ border-color:var(--brass); transform:translateY(-50%) scale(1.06); }
+  .car-nav.prev{ left:0; }
+  .car-nav.next{ right:0; }
+  @media (min-width:640px){
+    .car-nav.prev{ left:calc(50% - 340px); }
+    .car-nav.next{ right:calc(50% - 340px); }
+  }
+
+  .car-info{
+    text-align:center; max-width:440px; margin:8px auto 0;
+    min-height:96px;
+  }
+  .car-info .cat-tag{ display:block; margin-bottom:10px; }
+  .car-info h3{ font-size:24px; margin-bottom:8px; }
+  .car-info p{ color:var(--ivory-dim); font-size:14.5px; margin-bottom:12px; }
+  .car-info .car-price{
+    font-family:'JetBrains Mono', monospace; color:var(--brass); font-size:15px;
+  }
+
+  .car-dots{ display:flex; justify-content:center; gap:8px; margin-top:26px; }
+  .car-dot{
+    width:6px; height:6px; border-radius:50%; background:var(--line);
+    cursor:pointer; transition:background .3s, width .3s;
+  }
+  .car-dot.active{ background:var(--brass); width:20px; border-radius:4px; }
+
+  .car-tabs{ display:flex; justify-content:center; gap:10px; margin-bottom:44px; flex-wrap:wrap; }
+  .car-tab{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ivory-dim); background:transparent; border:1px solid var(--line);
+    padding:9px 18px; border-radius:100px; cursor:pointer; transition:all .2s;
+  }
+  .car-tab.active, .car-tab:hover{ color:#241A0C; background:var(--brass); border-color:var(--brass); }
 
   .gallery{ background:var(--bg2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .gallery-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; grid-template-rows:180px 180px; gap:14px; }
@@ -173,11 +259,12 @@
     font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ivory-dim);
     letter-spacing:.06em; text-transform:uppercase; position:relative; overflow:hidden;
   }
+  .g-tile img{ width:100%; height:100%; object-fit:cover; display:block; }
   .g-tile.tall{ grid-row:span 2; }
   .g-tile::after{
     content:''; position:absolute; inset:0; opacity:0;
     background:radial-gradient(circle at 50% 50%, #C9A15A30, transparent 65%);
-    transition:opacity .4s;
+    transition:opacity .4s; pointer-events:none;
   }
   .g-tile:hover::after{ opacity:1; }
 
@@ -206,31 +293,12 @@
     .hero{ padding:90px 0 100px; }
     .nav-links{ display:none; }
     .about-grid{ grid-template-columns:1fr; }
-    .menu-grid{ grid-template-columns:1fr; }
     .gallery-grid{ grid-template-columns:1fr 1fr; grid-template-rows:140px 140px 140px; }
     .g-tile.tall{ grid-row:span 1; }
     .reserve-form{ grid-template-columns:1fr; }
+    .carousel{ height:260px; }
+    .car-plate{ width:170px; height:170px; }
   }
-  .whatsapp-float{
-  position:fixed; bottom:26px; right:26px; z-index:60;
-  width:56px; height:56px; border-radius:50%;
-  background:#25D366;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 8px 20px -6px #00000066;
-  text-decoration:none;
-  transition:transform .2s;
-}
-.whatsapp-float:hover{ transform:scale(1.06); }
-.whatsapp-float::before{
-  content:''; position:absolute; inset:0; border-radius:50%;
-  background:#25D366; opacity:.55;
-  animation:wa-pulse 2.2s ease-out infinite;
-}
-@keyframes wa-pulse{
-  0%{ transform:scale(1); opacity:.5; }
-  100%{ transform:scale(1.7); opacity:0; }
-}
-.whatsapp-float svg{ position:relative; z-index:1; }
 </style>
 </head>
 <body>
@@ -267,7 +335,7 @@
 <section class="about" id="about">
   <div class="wrap about-grid">
     <div class="about-visual">
-      <img src="https://hips.hearstapps.com/edc.h-cdn.co/assets/16/28/2048x1536/sd-aspect-1468508286-ce-la-vi-restaurant-indoor.jpg?resize=1200:*"/>
+      <img src="https://hips.hearstapps.com/edc.h-cdn.co/assets/16/28/2048x1536/sd-aspect-1468508286-ce-la-vi-restaurant-indoor.jpg?resize=1200:*" alt="">
     </div>
     <div>
       <span class="eyebrow">Our story</span>
@@ -290,38 +358,27 @@
       <h2>Short on purpose.</h2>
       <p>A tight list, changed often. If it's not fresh enough to fire tonight, it isn't on here.</p>
     </div>
-    <div class="menu-grid">
-      <div class="menu-cat">
-        <span class="eyebrow">To start</span>
-        <div class="menu-item">
-          <div><span class="mi-name">Charred corn, chilli butter</span><span class="mi-desc">Whole cob, straight off the coal</span></div>
-          <span class="mi-price">₹220</span>
-        </div>
-        <div class="menu-item">
-          <div><span class="mi-name">Smoked burrata</span><span class="mi-desc">Fire-smoked over ash for six minutes</span></div>
-          <span class="mi-price">₹380</span>
-        </div>
-        <div class="menu-item">
-          <div><span class="mi-name">Flatbread, embers oil</span><span class="mi-desc">Baked directly on stone</span></div>
-          <span class="mi-price">₹190</span>
-        </div>
+
+    <div class="car-tabs" id="carTabs"></div>
+
+    <div class="carousel">
+      <div class="car-nav prev" id="carPrev" aria-label="Previous dish">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
       </div>
-      <div class="menu-cat">
-        <span class="eyebrow">From the fire</span>
-        <div class="menu-item">
-          <div><span class="mi-name">Whole grilled pomfret</span><span class="mi-desc">Coastal spice, charred lemon</span></div>
-          <span class="mi-price">₹640</span>
-        </div>
-        <div class="menu-item">
-          <div><span class="mi-name">Smoked mushroom skewers</span><span class="mi-desc">Char-grilled, herb oil</span></div>
-          <span class="mi-price">₹410</span>
-        </div>
-        <div class="menu-item">
-          <div><span class="mi-name">Ember-roasted eggplant</span><span class="mi-desc">Slow-charred, tahini</span></div>
-          <span class="mi-price">₹340</span>
-        </div>
+      <div class="car-stage" id="carStage"></div>
+      <div class="car-nav next" id="carNext" aria-label="Next dish">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
       </div>
     </div>
+
+    <div class="car-info" id="carInfo">
+      <span class="eyebrow cat-tag" id="carCat">To start</span>
+      <h3 id="carName">Charred corn</h3>
+      <p id="carDesc">Whole cob, straight off the coal, chilli butter.</p>
+      <span class="car-price" id="carPrice">₹220</span>
+    </div>
+
+    <div class="car-dots" id="carDots"></div>
   </div>
 </section>
 
@@ -333,19 +390,19 @@
     </div>
     <div class="gallery-grid">
       <div class="g-tile tall">
-        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/82/c0/92/bayleaf.jpg"/>
+        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/82/c0/92/bayleaf.jpg" alt="">
       </div>
       <div class="g-tile">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPe_OpE_DOhlyFlcBy7UKzS2WKAfeBfbIoaF-I-u5z_w5OG90ohrcpkJcC&s=10"/>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPe_OpE_DOhlyFlcBy7UKzS2WKAfeBfbIoaF-I-u5z_w5OG90ohrcpkJcC&s=10" alt="">
       </div>
       <div class="g-tile">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGAHGvfBaVPoPGpBkQ8k6ccjYz51qobMEThkENzJatbxKTAUB0oF7Y4lOj&s=10"/>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGAHGvfBaVPoPGpBkQ8k6ccjYz51qobMEThkENzJatbxKTAUB0oF7Y4lOj&s=10" alt="">
       </div>
       <div class="g-tile">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCbe98hwXOi_z87Mao-H1HT9ikex30Gqxxxb7QTknUmQ_Gx9NLqxqYQy4&s=10"/>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCbe98hwXOi_z87Mao-H1HT9ikex30Gqxxxb7QTknUmQ_Gx9NLqxqYQy4&s=10" alt="">
       </div>
       <div class="g-tile">
-        <img src="https://www.gotable.com/media/wysiwyg/resource-pages/bar_seating_layout.jpeg"/>
+        <img src="https://www.gotable.com/media/wysiwyg/resource-pages/bar_seating_layout.jpeg" alt="">
       </div>
     </div>
   </div>
@@ -386,5 +443,168 @@
     <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.71.44 3.36 1.29 4.83L2 22l5.42-1.38a9.9 9.9 0 0 0 4.62 1.15h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.64-1.03-5.13-2.9-6.99A9.82 9.82 0 0 0 12.04 2m0 1.67c2.27 0 4.4.88 6 2.49a8.4 8.4 0 0 1 2.48 5.99c0 4.67-3.8 8.47-8.48 8.47a8.5 8.5 0 0 1-4.31-1.17l-.31-.18-3.21.84.86-3.13-.2-.32a8.36 8.36 0 0 1-1.29-4.51c0-4.67 3.8-8.48 8.46-8.48m-4.65 4.36c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.35.99 2.51c.12.16 1.7 2.72 4.2 3.71 2.08.82 2.5.66 2.96.62.46-.04 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.22-.16-.46-.28-.24-.12-1.47-.72-1.7-.8-.23-.09-.39-.13-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.35-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.29.37-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.56-1.36-.78-1.86-.2-.48-.4-.42-.56-.43z"/>
   </svg>
 </a>
+
+<script>
+(function(){
+  // Dish/drink data — transparent PNG-style images (plate/glass shots on transparent bg)
+  const items = [
+    { cat:"To start", name:"Wood-fired pizza", desc:"Cheese and fresh vegetable toppings, blistered crust.", price:"₹420",
+      img:"https://png.pngtree.com/png-vector/20241211/ourmid/pngtree-authentic-italian-pizza-with-cheese-and-fresh-vegetable-toppings-png-image_14714611.png" },
+    { cat:"To start", name:"Smoked noodles", desc:"Tossed over the coal, charred edges.", price:"₹290",
+      img:"https://www.pngall.com/wp-content/uploads/5/Noodles-PNG-Image.png" },
+    { cat:"To start", name:"Flatbread, embers oil", desc:"Baked directly on stone.", price:"₹190",
+      img:"https://pngimg.com/uploads/bread/bread_PNG2307.png" },
+    { cat:"From the fire", name:"Fire-roasted chicken", desc:"Whole bird, coastal spice, charred lemon.", price:"₹640",
+      img:"https://pngimg.com/uploads/turkey_food/turkey_food_PNG14.png" },
+    { cat:"From the fire", name:"Smoked chicken biryani", desc:"Dum-cooked, finished with ember smoke.", price:"₹410",
+      img:"https://static.vecteezy.com/system/resources/thumbnails/069/844/693/small_2x/delicious-chicken-biryani-in-brown-bowl-food-photography-on-transparent-background-free-png.png" },
+    { cat:"Dessert", name:"Ember doughnut", desc:"Slow-fried, smoked sugar glaze.", price:"₹220",
+      img:"https://64.media.tumblr.com/6d3cb4d058baebb34601d037f77a99a2/tumblr_mjtottMnfC1s7umblo1_1280.png" },
+    { cat:"From the fire", name:"Wood-fired lasagna", desc:"Layered, baked over open flame.", price:"₹480",
+      img:"https://static.vecteezy.com/system/resources/thumbnails/025/250/347/small/delicious-italian-food-clipart-cartoon-spaghetti-illustration-generative-ai-png.png" },
+    { cat:"To start", name:"Charred fast food plate", desc:"House take on the classics, fire-kissed.", price:"₹350",
+      img:"https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-fast-foods-png-image_10320972.png" }
+  ];
+
+  const categories = ["All", ...Array.from(new Set(items.map(i => i.cat)))];
+  let filtered = items.slice();
+  let index = 0;
+  let activeCat = "All";
+
+  const stage = document.getElementById('carStage');
+  const dotsWrap = document.getElementById('carDots');
+  const tabsWrap = document.getElementById('carTabs');
+  const nameEl = document.getElementById('carName');
+  const descEl = document.getElementById('carDesc');
+  const priceEl = document.getElementById('carPrice');
+  const catEl = document.getElementById('carCat');
+
+  // Build category tabs
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'car-tab' + (cat === activeCat ? ' active' : '');
+    btn.textContent = cat;
+    btn.addEventListener('click', () => {
+      activeCat = cat;
+      filtered = cat === "All" ? items.slice() : items.filter(i => i.cat === cat);
+      index = 0;
+      document.querySelectorAll('.car-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      buildDots();
+      render();
+    });
+    tabsWrap.appendChild(btn);
+  });
+
+  function buildDots(){
+    dotsWrap.innerHTML = '';
+    filtered.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'car-dot' + (i === index ? ' active' : '');
+      d.addEventListener('click', () => { index = i; render(); });
+      dotsWrap.appendChild(d);
+    });
+  }
+
+  function buildStage(){
+    stage.innerHTML = '';
+    filtered.forEach((item, i) => {
+      const slot = document.createElement('div');
+      slot.className = 'car-slot';
+      slot.dataset.i = i;
+      slot.innerHTML = `
+        <div class="car-glow"></div>
+        <div class="car-plate">
+          <img src="${item.img}" alt="${item.name}" loading="lazy">
+        </div>`;
+      slot.addEventListener('click', () => { index = i; render(); });
+      stage.appendChild(slot);
+    });
+  }
+
+  // Positions relative to active index, wrapped circularly
+  function layout(){
+    const slots = stage.querySelectorAll('.car-slot');
+    const n = filtered.length;
+    slots.forEach((slot) => {
+      const i = parseInt(slot.dataset.i, 10);
+      let diff = i - index;
+      // wrap to shortest circular distance
+      if (diff > n / 2) diff -= n;
+      if (diff < -n / 2) diff -= -n === 0 ? 0 : 0;
+      if (diff < -n / 2) diff += n;
+
+      const absDiff = Math.abs(diff);
+      slot.classList.toggle('active', diff === 0);
+
+      if (absDiff > 2) {
+        slot.style.opacity = '0';
+        slot.style.transform = `translate(-50%,-50%) translateX(${diff > 0 ? 900 : -900}px) scale(.5)`;
+        slot.style.pointerEvents = 'none';
+        slot.style.zIndex = 0;
+        return;
+      }
+
+      const spacing = 220;
+      const x = diff * spacing;
+      const scale = diff === 0 ? 1 : (absDiff === 1 ? 0.72 : 0.5);
+      const rotate = diff * -14;
+      const opacity = diff === 0 ? 1 : (absDiff === 1 ? 0.55 : 0.28);
+      const z = 10 - absDiff;
+
+      slot.style.opacity = opacity;
+      slot.style.pointerEvents = 'auto';
+      slot.style.zIndex = z;
+      slot.style.transform = `translate(-50%,-50%) translateX(${x}px) scale(${scale}) rotate(${rotate}deg)`;
+      slot.style.filter = diff === 0 ? 'none' : 'brightness(.6)';
+    });
+  }
+
+  function renderInfo(){
+    const item = filtered[index];
+    if (!item) return;
+    catEl.textContent = item.cat;
+    nameEl.textContent = item.name;
+    descEl.textContent = item.desc;
+    priceEl.textContent = item.price;
+  }
+
+  function renderDots(){
+    document.querySelectorAll('.car-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === index);
+    });
+  }
+
+  function render(){
+    layout();
+    renderInfo();
+    renderDots();
+  }
+
+  document.getElementById('carPrev').addEventListener('click', () => {
+    index = (index - 1 + filtered.length) % filtered.length;
+    render();
+  });
+  document.getElementById('carNext').addEventListener('click', () => {
+    index = (index + 1) % filtered.length;
+    render();
+  });
+
+  // swipe support
+  let touchX = null;
+  stage.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+  stage.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (dx > 40) { index = (index - 1 + filtered.length) % filtered.length; render(); }
+    else if (dx < -40) { index = (index + 1) % filtered.length; render(); }
+    touchX = null;
+  });
+
+  buildStage();
+  buildDots();
+  render();
+})();
+</script>
 </body>
 </html>
